@@ -17,11 +17,11 @@ once a day for a new version and will publish this new version automatically as 
 You can install the package either in a virtual environment or globally.
 
 ```sh
-# install the latest version of "openapigenerator"
-pip install openapigenerator
+# install the latest version of "openapi-generator-cli"
+pip install openapi-generator-cli
 
-# install a specific version of "openapigenerator"
-pip install openapigenerator==4.2.0
+# install a specific version of "openapi-generator-cli"
+pip install openapi-generator-cli==4.2.0
 ```
 
 After installation `openapi-generator` command will be available in your virtual environment or globally 

@@ -6,7 +6,7 @@ from shutil import rmtree
 
 from setuptools import find_packages, setup, Command
 
-NAME = "openapigenerator"
+NAME = "openapi-generator-cli"
 DESCRIPTION = "CLI for openapi generator"
 URL = "https://github.com/OpenAPITools/openapi-generator"
 EMAIL = "team@openapitools.org"
