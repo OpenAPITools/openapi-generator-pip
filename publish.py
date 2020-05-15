@@ -60,18 +60,12 @@ def get_published_vesions():
 
 
 def publish():
-    available_versions = get_available_versions()
+    latest_version = get_available_versions()[0]
     published_versions = get_published_vesions()
 
-    print("Available versions: " + str(available_versions))
-    print("Published versions: " + str(published_versions))
-
-    versions_to_publish = set(available_versions) - set(published_versions)
-    print(versions_to_publish)
-
-    for version in versions_to_publish:
-        print("Publishing version " + version)
-        download_openapi_generator_jar(version)
+    if latest_version not in published_versions:
+        print("Publishing version " + latest_version)
+        download_openapi_generator_jar(latest_version)
         subprocess.check_call("python setup.py upload", shell=True)
 
 
