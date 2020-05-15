@@ -21,7 +21,7 @@ You can install the package either in a virtual environment or globally.
 pip install openapi-generator-cli
 
 # install a specific version of "openapi-generator-cli"
-pip install openapi-generator-cli==4.2.0
+pip install openapi-generator-cli==4.3.1
 ```
 
 After installation `openapi-generator` command will be available in your virtual environment or globally 
