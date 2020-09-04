@@ -16,6 +16,7 @@ def run():
     jar_path = os.path.join(
         os.path.dirname(os.path.realpath(__file__)), "openapi-generator.jar"
     )
+    jar_path = "\"" + jar_path + "\""
     arguments.append(jar_path)
 
     if len(sys.argv) > 1:
