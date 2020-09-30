@@ -74,5 +74,5 @@ setup(
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
     cmdclass={"upload": UploadCommand},
-    entry_points={"console_scripts": ["openapi-generator=openapi_generator_cli:run"]},
+    entry_points={"console_scripts": ["openapi-generator=openapi_generator_cli:cli"]},
 )
