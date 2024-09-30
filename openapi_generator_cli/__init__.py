@@ -18,16 +18,18 @@ def run(args=None):
     )
     arguments.append(jar_path)
 
-    if args and type(args)==list:
+    if args and type(args) == list:
         arguments.extend(args)
 
     subprocess.call(" ".join(arguments), shell=True)
+
 
 def cli():
     args = []
     if len(sys.argv) > 1:
         args = sys.argv[1:]
     run(args)
+
 
 if __name__ == "__main__":
     cli()
