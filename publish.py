@@ -49,7 +49,7 @@ def get_available_versions():
 
 
 def get_published_vesions():
-    pypi_url = "https://pypi.org/pypi/openapigenerator/json"
+    pypi_url = "https://pypi.org/pypi/openapi-generator-cli/json"
     response = requests.get(pypi_url)
 
     if response.status_code == 404:
