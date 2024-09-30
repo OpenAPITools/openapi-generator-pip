@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 
-def run():
+def run(args=None):
     arguments = ["java"]
 
     if os.getenv("JAVA_OPTS"):
@@ -18,7 +18,18 @@ def run():
     )
     arguments.append(jar_path)
 
-    if len(sys.argv) > 1:
-        arguments.extend(sys.argv[1:])
+    if args and type(args) == list:
+        arguments.extend(args)
 
     subprocess.call(" ".join(arguments), shell=True)
+
+
+def cli():
+    args = []
+    if len(sys.argv) > 1:
+        args = sys.argv[1:]
+    run(args)
+
+
+if __name__ == "__main__":
+    cli()
