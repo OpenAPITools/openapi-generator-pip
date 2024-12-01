@@ -7,7 +7,7 @@ requires = [
 ]
 
 [tool.poetry]
-version = "0"
+version = "7.10.0"
 authors = [
   "OpenAPI Generator community <team@openapitools.org>",
 ]
@@ -46,7 +46,7 @@ taskipy = "^1.10.3"
 pytest = ">=7.2.2,<9.0.0"
 
 [tool.poetry.scripts]
-openapi-generator = "openapi_generator_cli:run"
+openapi-generator = "openapi_generator_cli:cli"
 
 [tool.black]
 line-length = 120
