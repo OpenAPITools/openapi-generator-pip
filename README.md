@@ -34,13 +34,13 @@ pip install openapi-generator-cli
 pip install openapi-generator-cli==4.3.1
 ```
 
-After installation `openapi-generator` command will be available in your virtual environment or globally depending on your installation.
+After installation `openapi-generator-cli` command will be available in your virtual environment or globally depending on your installation.
 
 To check the version, for example. Type the following command
 
 ```sh
 # this will print the correct version number
-openapi-generator version
+openapi-generator-cli version
 ```
 
 ## Further Documentation
