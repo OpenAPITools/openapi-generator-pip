@@ -1,4 +1,4 @@
-# OpenApi Generator PIP Package Generator
+# OpenAPI Generator in Package Installer for Python (PIP)
 
 [![Join the Slack chat room](
   <https://img.shields.io/badge/Slack-Join%20the%20chat%20room-orange>
