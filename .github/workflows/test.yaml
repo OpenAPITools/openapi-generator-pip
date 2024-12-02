@@ -1,0 +1,37 @@
+name: Test
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+        - ubuntu-latest
+        - windows-latest
+        - macos-latest
+        python-version:
+        - '3.9'
+        - '3.13'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install poetry
+      run: pipx install poetry
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: poetry
+    - name: Setup
+      run: |
+        DOWNLOAD_LATEST_ONLY=1 python publish.py
+        poetry install --no-interaction
+    - name: Test
+      run: |
+        poetry run task test
