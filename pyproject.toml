@@ -44,6 +44,7 @@ mypy = ">=0.991,<1.14"
 pre-commit = ">=2.20,<4.0"
 taskipy = "^1.10.3"
 pytest = ">=7.2.2,<9.0.0"
+natsort = "^8.4.0"
 
 [tool.poetry.scripts]
 openapi-generator-cli = "openapi_generator_cli:cli"
@@ -65,6 +66,9 @@ lint.ignore = [
 ]
 lint.per-file-ignores."publish.py" = [
   "T201", # `print` found
+]
+lint.per-file-ignores."tests/test_*.py" = [
+  "S101", # Use of `assert` detected
 ]
 
 [tool.mypy]
