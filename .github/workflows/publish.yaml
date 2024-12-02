@@ -24,6 +24,7 @@ jobs:
     - name: Setup Poetry to publish
       run: |
         poetry install --no-interaction
+        poetry config repositories.testpypi 'https://test.pypi.org/legacy/'
         poetry config pypi-token.testpypi '${{ secrets.TESTPYPI_API_TOKEN }}'
         poetry config pypi-token.pypi '${{ secrets.PYPI_API_TOKEN }}'
     - name: Publish package
