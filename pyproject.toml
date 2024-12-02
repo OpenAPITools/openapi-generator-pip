@@ -21,7 +21,7 @@ classifiers = [
 ]
 description = "CLI for openapi generator"
 keywords = [
-  "opeapi",
+  "openapi",
   "generator",
   "cli",
 ]
