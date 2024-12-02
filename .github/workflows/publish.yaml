@@ -1,0 +1,30 @@
+name: Release Package
+
+# need to setup:
+# secrets.PYPI_API_TOKEN (See: https://pypi.org/help/#apitoken)
+# secrets.TESTPYPI_API_TOKEN (See: https://test.pypi.org/help/#apitoken)
+
+on:
+  # TODO: enable scheduled run
+  # schedule:
+  # - cron: 0 0 * * *
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install poetry
+      run: pipx install poetry
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        cache: poetry
+    - name: Setup Poetry to publish
+      run: |
+        poetry install --no-interaction
+        poetry config pypi-token.testpypi '${{ secrets.TESTPYPI_API_TOKEN }}'
+        poetry config pypi-token.pypi '${{ secrets.PYPI_API_TOKEN }}'
+    - name: Publish package
+      run: python publish.py

@@ -1,0 +1,79 @@
+# TODO: In Poetry 2.0 move into PEP 621 compatible configuration
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[tool.poetry]
+version = "7.10.0"
+authors = [
+  "OpenAPI Generator community <team@openapitools.org>",
+]
+classifiers = [
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+description = "CLI for openapi generator"
+keywords = [
+  "opeapi",
+  "generator",
+  "cli",
+]
+name = "openapi-generator-cli"
+packages = [
+  { include = "openapi_generator_cli" },
+]
+include = [ "openapi_generator_cli/*.jar" ]
+license = "APACHE 2.0"
+readme = "README.md"
+homepage = "https://openapi-generator.tech"
+repository = "https://github.com/OpenAPITools/openapi-generator"
+documentation = "https://github.com/OpenAPITools/openapi-generator#3---usage"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4"
+
+[tool.poetry.group.dev.dependencies]
+mypy = ">=0.991,<1.14"
+pre-commit = ">=2.20,<4.0"
+taskipy = "^1.10.3"
+pytest = ">=7.2.2,<9.0.0"
+
+[tool.poetry.scripts]
+openapi-generator-cli = "openapi_generator_cli:cli"
+
+[tool.black]
+line-length = 120
+target-version = [
+  'py39',
+]
+
+[tool.ruff]
+line-length = 120
+
+lint.select = [
+  "ALL",
+]
+lint.ignore = [
+  "D",
+]
+lint.per-file-ignores."publish.py" = [
+  "T201", # `print` found
+]
+
+[tool.mypy]
+pretty = true
+python_version = "3.9"
+show_error_codes = true
+strict = true
+
+[tool.taskipy.tasks]
+test = "pytest"
+lint = "pre-commit run -a"
+profile = "python -m cProfile"
