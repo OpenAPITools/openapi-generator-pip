@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import re
 from typing import TYPE_CHECKING
 
@@ -14,7 +15,7 @@ def test_cli_version(capfd: pytest.CaptureFixture[str]) -> None:
     assert result.returncode == 0
 
     captured = capfd.readouterr()
-    assert re.match(r"^\d+\.\d+\.\d+(?:-beta\d*)?$", captured.out.split("\n")[0])
+    assert re.match(r"^\d+\.\d+\.\d+(?:-beta\d*)?$", captured.out.split(os.linesep)[0])
     assert not captured.err
 
 
@@ -40,4 +41,4 @@ def test_invalid_arg(capfd: pytest.CaptureFixture[str]) -> None:
 
     captured = capfd.readouterr()
     assert not captured.out
-    assert "Found unexpected parameters: [--invalid-arg-404]" in captured.err.split("\n")[0]
+    assert "Found unexpected parameters: [--invalid-arg-404]" in captured.err.split(os.linesep)[0]
