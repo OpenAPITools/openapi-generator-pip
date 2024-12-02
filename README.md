@@ -4,6 +4,10 @@
   <https://img.shields.io/badge/Slack-Join%20the%20chat%20room-orange>
 )](
   <https://join.slack.com/t/openapi-generator/shared_invite/zt-12jxxd7p2-XUeQM~4pzsU9x~eGLQqX2g>
+) [![PyPI version](
+  <https://badge.fury.io/py/openapi-generator-cli.svg>
+)](
+  <https://badge.fury.io/py/openapi-generator-cli>
 ) [![Code style: black](
   <https://img.shields.io/badge/code%20style-black-000000.svg>
 )](
