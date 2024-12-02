@@ -82,6 +82,9 @@ show_error_codes = true
 strict = true
 
 [tool.taskipy.tasks]
+download-latest-jar = "DOWNLOAD_LATEST_ONLY=1 task publish"
 test = "pytest"
+test-unpublished-versions = "DRYRUN=1 task publish"
 lint = "pre-commit run -a"
+publish = "python publish.py"
 profile = "python -m cProfile"

@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os:
         - ubuntu-latest
@@ -30,8 +30,8 @@ jobs:
         cache: poetry
     - name: Setup
       run: |
-        DOWNLOAD_LATEST_ONLY=1 python publish.py
         poetry install --no-interaction
+        poetry run task download-latest-jar
     - name: Test
       run: |
         poetry run task test

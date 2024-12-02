@@ -27,4 +27,4 @@ jobs:
         poetry config pypi-token.testpypi '${{ secrets.TESTPYPI_API_TOKEN }}'
         poetry config pypi-token.pypi '${{ secrets.PYPI_API_TOKEN }}'
     - name: Publish package
-      run: python publish.py
+      run: poetry run task publish

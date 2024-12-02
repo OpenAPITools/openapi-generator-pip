@@ -28,24 +28,23 @@ poetry shell
 task lint
 ```
 
-## Fetch latest jar file and run tests
+## Fetch latest jar file
 
 ```bash
 # in venv:
-DOWNLOAD_LATEST_ONLY=1 python publish.py
-task test
+task download-latest-jar
 ```
 
 ## Run tests for all unpublished versions without publishing
 
 ```bash
 # in venv:
-DRYRUN=1 python publish.py
+task test-unpublished-versions
 ```
 
 ## Publish all unpublished versuibs to PyPI (for CI)
 
 ```bash
 # in venv:
-python publish.py
+task publish
 ```
