@@ -101,13 +101,13 @@ def publish(*, dryrun: bool = False) -> None:
             continue
 
         print(f"[{publishing_version}] Building...")
-        subprocess.check_call([poetry_path, "build", "-v"])  # noqa: S603
+        subprocess.check_call([poetry_path, "build", "-v"])
 
         print(f"[{publishing_version}] Publishing to TestPyPI...")
-        subprocess.check_call([poetry_path, "publish", "-r", "testpypi", "-v"])  # noqa: S603
+        subprocess.check_call([poetry_path, "publish", "-r", "testpypi", "-v"])
 
         print(f"[{publishing_version}] Publishing to PyPI...")
-        subprocess.check_call([poetry_path, "publish", "-v"])  # noqa: S603
+        subprocess.check_call([poetry_path, "publish", "-v"])
 
         print(f"[{publishing_version}] Published!")
 

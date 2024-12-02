@@ -62,12 +62,16 @@ lint.select = [
   "ALL",
 ]
 lint.ignore = [
-  "D",
+  "D211", # No blank lines allowed before class docstring
+  "D213", # Multi-line docstring summary should start at the second line
 ]
 lint.per-file-ignores."publish.py" = [
+  "D",
+  "S603", # `subprocess` call: check for execution of untrusted input
   "T201", # `print` found
 ]
-lint.per-file-ignores."tests/test_*.py" = [
+lint.per-file-ignores."tests/*" = [
+  "D",
   "S101", # Use of `assert` detected
 ]
 
