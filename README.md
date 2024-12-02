@@ -38,6 +38,12 @@ pip install openapi-generator-cli
 pip install openapi-generator-cli==4.3.1
 ```
 
+You can also install with [`jdk4py`] instead of `java` binary. (`python>=3.10` is required)
+
+```sh
+pip install openapi-generator-cli[jdk4py]
+```
+
 After installation `openapi-generator-cli` command will be available in your virtual environment or globally depending on your installation.
 
 To check the version, for example. Type the following command
@@ -61,4 +67,5 @@ Please raise an issue, happy to hear from you :)
 
 [OpenAPITools/openapi-generator]: <https://github.com/OpenAPITools/openapi-generator>
 [maven repository]: <https://mvnrepository.com/artifact/org.openapitools/openapi-generator-cli>
+[`jdk4py`]: <https://github.com/activeviam/jdk4py>
 [official openapi-generator docs]: <https://github.com/OpenAPITools/openapi-generator#3---usage>

@@ -4,8 +4,13 @@ from __future__ import annotations
 
 import importlib.resources
 import os
+import shutil
 import subprocess
 import sys
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
@@ -21,7 +26,18 @@ def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
         subprocess.CompletedProcess[bytes]: The result of running the OpenAPI Generator CLI.
 
     """
-    arguments = ["java"]
+    java_path: Path | str | None
+    try:
+        from jdk4py import JAVA
+
+        java_path = JAVA
+    except ImportError:
+        java_path = shutil.which("java")
+    if not java_path:
+        msg = "java runtime is not found in PATH"
+        raise RuntimeError(msg)
+
+    arguments = [java_path]
 
     java_opts = os.getenv("JAVA_OPTS")
     if java_opts:
