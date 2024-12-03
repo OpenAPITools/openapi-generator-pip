@@ -38,6 +38,7 @@ documentation = "https://github.com/OpenAPITools/openapi-generator#3---usage"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4"
+jdk4py = { version = "^21.0.4.1", optional = true, python = ">=3.10" }
 
 [tool.poetry.group.dev.dependencies]
 mypy = ">=0.991,<1.14"
@@ -45,6 +46,9 @@ pre-commit = ">=2.20,<5.0"
 taskipy = "^1.10.3"
 pytest = ">=7.2.2,<9.0.0"
 natsort = "^8.4.0"
+
+[tool.poetry.extras]
+jdk4py = [ "jdk4py" ]
 
 [tool.poetry.scripts]
 openapi-generator-cli = "openapi_generator_cli:cli"
