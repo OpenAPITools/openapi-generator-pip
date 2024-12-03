@@ -44,6 +44,7 @@ mypy = ">=0.991,<1.14"
 pre-commit = ">=2.20,<4.0"
 taskipy = "^1.10.3"
 pytest = ">=7.2.2,<9.0.0"
+natsort = "^8.4.0"
 
 [tool.poetry.scripts]
 openapi-generator-cli = "openapi_generator_cli:cli"
@@ -61,10 +62,17 @@ lint.select = [
   "ALL",
 ]
 lint.ignore = [
-  "D",
+  "D211", # No blank lines allowed before class docstring
+  "D213", # Multi-line docstring summary should start at the second line
 ]
 lint.per-file-ignores."publish.py" = [
+  "D",
+  "S603", # `subprocess` call: check for execution of untrusted input
   "T201", # `print` found
+]
+lint.per-file-ignores."tests/*" = [
+  "D",
+  "S101", # Use of `assert` detected
 ]
 
 [tool.mypy]
@@ -74,6 +82,9 @@ show_error_codes = true
 strict = true
 
 [tool.taskipy.tasks]
+download-latest-jar = "DOWNLOAD_LATEST_ONLY=1 task publish"
 test = "pytest"
+test-unpublished-versions = "DRYRUN=1 task publish"
 lint = "pre-commit run -a"
+publish = "python publish.py"
 profile = "python -m cProfile"

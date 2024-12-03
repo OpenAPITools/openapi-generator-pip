@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: /
+  schedule:
+    interval: monthly
+  groups:
+    dependencies:
+      dependency-type: production
+    dev-dependencies:
+      dependency-type: development
+- package-ecosystem: github-actions
+  directory: /
+  schedule:
+    interval: monthly
