@@ -7,7 +7,7 @@ requires = [
 ]
 
 [tool.poetry]
-version = "7.10.0"
+version = "0"
 authors = [
   "OpenAPI Generator community <team@openapitools.org>",
 ]

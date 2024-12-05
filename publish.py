@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -37,19 +38,6 @@ def download_openapi_generator_jar(version: str) -> None:
         openapi_generator_jar.write(response.read())
         openapi_generator_jar.close()
 
-    updated_toml = (
-        Path("pyproject.toml")  # noqa: SIM115
-        .open("r")
-        .read()
-        .replace(
-            '[tool.poetry]\nversion = "0"',
-            f'[tool.poetry]\nversion = "{version}"',
-            1,
-        )
-    )
-    with Path("pyproject.toml").open("w") as toml:
-        toml.write(updated_toml)
-
 
 def get_available_versions() -> list[str]:
     mvn_url = (
@@ -77,6 +65,18 @@ def get_published_vesions() -> KeysView[str]:
     return published_releases.keys()
 
 
+def update_package_version(version: str) -> None:
+    updated_toml = re.sub(
+        r'(?<=\[tool.poetry\]\nversion = ")[^"]+(?=")',
+        version,
+        Path("pyproject.toml").open("r").read(),  # noqa: SIM115
+        count=1,
+        flags=(re.MULTILINE),
+    )
+    with Path("pyproject.toml").open("w") as toml:
+        toml.write(updated_toml)
+
+
 def download_latest_jar_for_test() -> None:
     latest_version = natsorted(get_available_versions())[-1]
     print(f"[{latest_version}] Downloading...")
@@ -93,6 +93,9 @@ def publish(*, dryrun: bool = False) -> None:
     for publishing_version in unpublished_versions:
         print(f"[{publishing_version}] Downloading...")
         download_openapi_generator_jar(publishing_version)
+
+        print(f"[{publishing_version}] Updating package version...")
+        update_package_version(publishing_version)
 
         print(f"[{publishing_version}] Testing...")
         subprocess.check_call([pytest_path])
