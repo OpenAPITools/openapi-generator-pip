@@ -17,6 +17,21 @@ if TYPE_CHECKING:
 MVN_BASE_URL = "https://search.maven.org"
 
 
+def convert_pre_release_version(version: str) -> str:
+    pattern = re.compile(r"(?P<ver>\d+\.\d+\.\d+)-(?P<stage>[ab])(?:lpha|eta)(?P<revision>\d*)$")
+    if not (m := pattern.match(version)):
+        return version
+
+    if not (ver := m["ver"]):
+        return version
+
+    if not (stage := m["stage"]):
+        return version
+
+    revision = m["revision"] or 0
+    return pattern.sub(f"{ver}{stage}{revision}", version, count=1)
+
+
 def download_openapi_generator_jar(version: str) -> None:
     download_url = (
         MVN_BASE_URL
@@ -46,7 +61,7 @@ def get_available_versions() -> list[str]:
     )
     response = urlopen(mvn_url)  #  noqa: S310
     docs = json.loads(response.read())["response"]["docs"]
-    return [doc["v"] for doc in docs]
+    return [convert_pre_release_version(doc["v"]) for doc in docs]
 
 
 def get_published_vesions() -> KeysView[str]:
@@ -89,6 +104,10 @@ def publish(*, dryrun: bool = False) -> None:
     poetry_path = shutil.which("poetry")
 
     unpublished_versions = natsorted(set(get_available_versions()) - set(get_published_vesions()))
+
+    if len(unpublished_versions) == 0:
+        print("[!] Nothing to be released.")
+        return
 
     for publishing_version in unpublished_versions:
         print(f"[{publishing_version}] Downloading...")
