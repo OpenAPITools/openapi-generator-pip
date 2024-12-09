@@ -6,15 +6,12 @@ import re
 import shutil
 import subprocess
 from pathlib import Path
-from typing import TYPE_CHECKING
 from urllib.request import urlopen
 
 from natsort import natsorted
 
-if TYPE_CHECKING:
-    from collections.abc import KeysView
-
 MVN_BASE_URL = "https://search.maven.org"
+MVN_CENTRAL_BASE_URL = "https://central.sonatype.com"
 
 
 def convert_pre_release_version(version: str) -> str:
@@ -35,9 +32,8 @@ def convert_pre_release_version(version: str) -> str:
 def download_openapi_generator_jar(version: str) -> None:
     download_url = (
         MVN_BASE_URL
-        + "/remotecontent?filepath=org/openapitools/openapi-generator-cli/"
-        + version
-        + f"/openapi-generator-cli-{version}.jar"
+        + "/remotecontent?filepath=org/openapitools/openapi-generator-cli"
+        + f"/{version}/openapi-generator-cli-{version}.jar"
     )
 
     Path("openapi-generator.jar").unlink(missing_ok=True)
@@ -54,17 +50,24 @@ def download_openapi_generator_jar(version: str) -> None:
         openapi_generator_jar.close()
 
 
-def get_available_versions() -> list[str]:
-    mvn_url = (
-        MVN_BASE_URL + "/solrsearch/select?q=g:org.openapitools+AND+a:openapi-generator-cli&core=gav"
-        "&start=0&rows=200"
-    )
-    response = urlopen(mvn_url)  #  noqa: S310
-    docs = json.loads(response.read())["response"]["docs"]
-    return [convert_pre_release_version(doc["v"]) for doc in docs]
+def get_available_versions() -> set[str]:
+    rows = 200
+    versions: list[str] = []
+    for page_index, _ in enumerate(iter(int, 1)):  # 0..Inf
+        mvn_url = (
+            MVN_CENTRAL_BASE_URL
+            + "/solrsearch/select?q=g:org.openapitools+AND+a:openapi-generator-cli&core=gav&format=json"
+            f"&start={page_index}&rows={rows}"
+        )
+        response = urlopen(mvn_url)  #  noqa: S310
+        docs = json.loads(response.read())["response"]["docs"]
+        if len(docs) == 0:
+            break
+        versions.extend(convert_pre_release_version(doc["v"]) for doc in docs)
+    return set(versions)
 
 
-def get_published_vesions() -> KeysView[str]:
+def get_published_vesions() -> set[str]:
     pypi_url = "https://pypi.org/pypi/openapi-generator-cli/json"
     response = urlopen(pypi_url)  #  noqa: S310
 
@@ -77,7 +80,7 @@ def get_published_vesions() -> KeysView[str]:
         msg = f"Expected dict, got {type(published_releases)}"
         raise TypeError(msg)
 
-    return published_releases.keys()
+    return set(published_releases.keys())
 
 
 def update_package_version(version: str) -> None:
@@ -103,7 +106,7 @@ def publish(*, dryrun: bool = False) -> None:
     pytest_path = shutil.which("pytest")
     poetry_path = shutil.which("poetry")
 
-    unpublished_versions = natsorted(set(get_available_versions()) - set(get_published_vesions()))
+    unpublished_versions = natsorted(get_available_versions() - get_published_vesions())
 
     if len(unpublished_versions) == 0:
         print("[!] Nothing to be released.")
