@@ -41,7 +41,7 @@ python = ">=3.9,<4"
 jdk4py = { version = "^21.0.4.1", optional = true, python = ">=3.10" }
 
 [tool.poetry.group.dev.dependencies]
-mypy = ">=0.991,<1.14"
+mypy = ">=0.991,<1.15"
 pre-commit = ">=2.20,<5.0"
 taskipy = "^1.10.3"
 pytest = ">=7.2.2,<9.0.0"
