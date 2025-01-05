@@ -42,7 +42,7 @@ task download-latest-jar
 task test-unpublished-versions
 ```
 
-## Publish all unpublished versuibs to PyPI (for CI)
+## Publish all unpublished versions to PyPI (for CI)
 
 ```bash
 # in venv:
