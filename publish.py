@@ -85,7 +85,7 @@ def get_published_vesions() -> set[str]:
 
 def update_package_version(version: str) -> None:
     updated_toml = re.sub(
-        r'(?<=\[tool.poetry\]\nversion = ")[^"]+(?=")',
+        r'(?<=name = "openapi-generator-cli"\nversion = ")[^"]+(?=")',
         version,
         Path("pyproject.toml").open("r").read(),  # noqa: SIM115
         count=1,

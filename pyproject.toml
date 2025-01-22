@@ -1,44 +1,51 @@
-# TODO: In Poetry 2.0 move into PEP 621 compatible configuration
-
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = [
-  "poetry-core",
+  "poetry-core>=2",
 ]
 
-[tool.poetry]
+[project]
+name = "openapi-generator-cli"
 version = "0"
-authors = [
-  "OpenAPI Generator community <team@openapitools.org>",
+description = "CLI for openapi generator"
+readme = "README.md"
+keywords = [
+  "cli",
+  "generator",
+  "openapi",
 ]
+license = { text = "APACHE 2.0" }
+authors = [
+  { name = "OpenAPI Generator community", email = "team@openapitools.org" },
+]
+requires-python = ">=3.9,<4"
 classifiers = [
   "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
+  "Typing :: Typed",
 ]
-description = "CLI for openapi generator"
-keywords = [
-  "openapi",
-  "generator",
-  "cli",
+optional-dependencies.jdk4py = [
+  "jdk4py>=21.0.4.1,<22; python_version>='3.10'",
 ]
-name = "openapi-generator-cli"
+urls.Documentation = "https://github.com/OpenAPITools/openapi-generator#3---usage"
+urls.Homepage = "https://openapi-generator.tech"
+urls.Repository = "https://github.com/OpenAPITools/openapi-generator"
+scripts.openapi-generator-cli = "openapi_generator_cli:cli"
+
+[tool.poetry]
+requires-poetry = ">=2.0"
 packages = [
   { include = "openapi_generator_cli" },
 ]
 include = [ "openapi_generator_cli/*.jar" ]
-license = "APACHE 2.0"
-readme = "README.md"
-homepage = "https://openapi-generator.tech"
-repository = "https://github.com/OpenAPITools/openapi-generator"
-documentation = "https://github.com/OpenAPITools/openapi-generator#3---usage"
-
-[tool.poetry.dependencies]
-python = ">=3.9,<4"
-jdk4py = { version = "^21.0.4.1", optional = true, python = ">=3.10" }
 
 [tool.poetry.group.dev.dependencies]
 mypy = ">=0.991,<1.15"
@@ -47,11 +54,8 @@ taskipy = "^1.10.3"
 pytest = ">=7.2.2,<9.0.0"
 natsort = "^8.4.0"
 
-[tool.poetry.extras]
-jdk4py = [ "jdk4py" ]
-
-[tool.poetry.scripts]
-openapi-generator-cli = "openapi_generator_cli:cli"
+[tool.poetry.requires-plugins]
+poetry-plugin-shell = ">=1.0"
 
 [tool.black]
 line-length = 120
