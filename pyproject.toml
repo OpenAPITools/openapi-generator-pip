@@ -45,7 +45,9 @@ requires-poetry = ">=2.0"
 packages = [
   { include = "openapi_generator_cli" },
 ]
-include = [ "openapi_generator_cli/*.jar" ]
+include = [
+  { path = "openapi_generator_cli/openapi-generator.jar", format = [ "sdist", "wheel" ] },
+]
 
 [tool.poetry.group.dev.dependencies]
 mypy = ">=0.991,<1.15"
