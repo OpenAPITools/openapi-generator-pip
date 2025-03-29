@@ -41,4 +41,7 @@ def test_invalid_arg(capfd: pytest.CaptureFixture[str]) -> None:
 
     captured = capfd.readouterr()
     assert not captured.out
-    assert "Found unexpected parameters: [--invalid-arg-404]" in captured.err.split(os.linesep)[0]
+    assert (
+        "Found unexpected parameters: [--invalid-arg-404]"
+        in captured.err.split(os.linesep)[0]
+    )

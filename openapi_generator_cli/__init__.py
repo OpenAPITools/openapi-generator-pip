@@ -45,7 +45,9 @@ def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
 
     arguments.append("-jar")
 
-    jar_path = importlib.resources.files("openapi_generator_cli") / "openapi-generator.jar"
+    jar_path = (
+        importlib.resources.files("openapi_generator_cli") / "openapi-generator.jar"
+    )
     arguments.append(str(jar_path))
 
     if args and isinstance(args, list):
