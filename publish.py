@@ -15,7 +15,9 @@ MVN_CENTRAL_BASE_URL = "https://central.sonatype.com"
 
 
 def convert_pre_release_version(version: str) -> str:
-    pattern = re.compile(r"(?P<ver>\d+\.\d+\.\d+)-(?P<stage>[ab])(?:lpha|eta)(?P<revision>\d*)$")
+    pattern = re.compile(
+        r"(?P<ver>\d+\.\d+\.\d+)-(?P<stage>[ab])(?:lpha|eta)(?P<revision>\d*)$",
+    )
     if not (m := pattern.match(version)):
         return version
 
@@ -45,7 +47,9 @@ def download_openapi_generator_jar(version: str) -> None:
         msg = f"{response.status}: {download_url}"
         raise RuntimeError(msg)
 
-    with Path("openapi_generator_cli/openapi-generator.jar").open("wb") as openapi_generator_jar:
+    with Path("openapi_generator_cli/openapi-generator.jar").open(
+        "wb",
+    ) as openapi_generator_jar:
         openapi_generator_jar.write(response.read())
         openapi_generator_jar.close()
 
@@ -104,7 +108,7 @@ def download_latest_jar_for_test() -> None:
 
 def publish(*, dryrun: bool = False) -> None:
     pytest_path = shutil.which("pytest")
-    poetry_path = shutil.which("poetry")
+    uv_path = shutil.which("uv")
 
     unpublished_versions = natsorted(get_available_versions() - get_published_vesions())
 
@@ -126,13 +130,31 @@ def publish(*, dryrun: bool = False) -> None:
             continue
 
         print(f"[{publishing_version}] Building...")
-        subprocess.check_call([poetry_path, "build", "-v"])
+        subprocess.check_call([uv_path, "build", "-v"])
 
         print(f"[{publishing_version}] Publishing to TestPyPI...")
-        subprocess.check_call([poetry_path, "publish", "-r", "testpypi", "-v"])
+        subprocess.check_call(
+            [
+                uv_path,
+                "publish",
+                "--publish-url",
+                "https://test.pypi.org/legacy/",
+                "--token",
+                os.getenv("TESTPYPI_API_TOKEN"),
+                "-v",
+            ],
+        )
 
         print(f"[{publishing_version}] Publishing to PyPI...")
-        subprocess.check_call([poetry_path, "publish", "-v"])
+        subprocess.check_call(
+            [
+                uv_path,
+                "publish",
+                "--token",
+                os.getenv("PYPI_API_TOKEN"),
+                "-v",
+            ],
+        )
 
         print(f"[{publishing_version}] Published!")
 

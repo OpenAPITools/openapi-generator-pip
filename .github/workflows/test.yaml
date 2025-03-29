@@ -26,18 +26,21 @@ jobs:
       with:
         distribution: temurin
         java-version: '21'
-    - name: Install poetry
-      run: pipx install poetry
-    - uses: actions/setup-python@v5
+    - uses: astral-sh/setup-uv@v5
       with:
+        enable-cache: true
+        cache-dependency-glob: uv.lock
         python-version: ${{ matrix.python-version }}
-        cache: poetry
     - name: Setup
       shell: bash
       run: |
-        poetry install --no-interaction
         export DOWNLOAD_LATEST_ONLY=1
-        poetry run task publish
+        uv run task publish
     - name: Test
       run: |
-        poetry run task test
+        uv run task test:ci
+    - name: Pytest coverage comment
+      uses: MishaKav/pytest-coverage-comment@v1.1.53
+      with:
+        pytest-xml-coverage-path: ./coverage.xml
+        junitxml-path: ./pytest.xml
