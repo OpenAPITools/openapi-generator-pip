@@ -5,8 +5,7 @@
     "ghcr.io/devcontainers/features/python:1": {
       "version": "latest",
       "installTools": false,
-      "installJupyterlab": false,
-      "toolsToInstall": "mypy"
+      "installJupyterlab": false
     },
     "ghcr.io/va-h/devcontainers-features/uv:1": {},
     "ghcr.io/devcontainers-contrib/features/shfmt:1": {},
