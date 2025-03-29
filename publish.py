@@ -14,6 +14,14 @@ MVN_BASE_URL = "https://search.maven.org"
 MVN_CENTRAL_BASE_URL = "https://central.sonatype.com"
 
 
+def get_path(cmd: str) -> str:
+    path = shutil.which(cmd)
+    if not path:
+        msg = f"{cmd} not found"
+        raise ValueError(msg)
+    return path
+
+
 def convert_pre_release_version(version: str) -> str:
     pattern = re.compile(
         r"(?P<ver>\d+\.\d+\.\d+)-(?P<stage>[ab])(?:lpha|eta)(?P<revision>\d*)$",
@@ -51,7 +59,6 @@ def download_openapi_generator_jar(version: str) -> None:
         "wb",
     ) as openapi_generator_jar:
         openapi_generator_jar.write(response.read())
-        openapi_generator_jar.close()
 
 
 def get_available_versions() -> set[str]:
@@ -71,7 +78,7 @@ def get_available_versions() -> set[str]:
     return set(versions)
 
 
-def get_published_vesions() -> set[str]:
+def get_published_versions() -> set[str]:
     pypi_url = "https://pypi.org/pypi/openapi-generator-cli/json"
     response = urlopen(pypi_url)  #  noqa: S310
 
@@ -107,10 +114,13 @@ def download_latest_jar_for_test() -> None:
 
 
 def publish(*, dryrun: bool = False) -> None:
-    pytest_path = shutil.which("pytest")
-    uv_path = shutil.which("uv")
+    pytest_path = get_path("pytest")
+    uv_path = get_path("uv")
 
-    unpublished_versions = natsorted(get_available_versions() - get_published_vesions())
+    testpypi_api_token = os.environ["TESTPYPI_API_TOKEN"]
+    pypi_api_token = os.environ["PYPI_API_TOKEN"]
+
+    unpublished_versions = natsorted(get_available_versions() - get_published_versions())
 
     if len(unpublished_versions) == 0:
         print("[!] Nothing to be released.")
@@ -140,7 +150,7 @@ def publish(*, dryrun: bool = False) -> None:
                 "--publish-url",
                 "https://test.pypi.org/legacy/",
                 "--token",
-                os.getenv("TESTPYPI_API_TOKEN"),
+                testpypi_api_token,
                 "-v",
             ],
         )
@@ -151,7 +161,7 @@ def publish(*, dryrun: bool = False) -> None:
                 uv_path,
                 "publish",
                 "--token",
-                os.getenv("PYPI_API_TOKEN"),
+                pypi_api_token,
                 "-v",
             ],
         )
