@@ -49,12 +49,16 @@ dev = [
 [tool.hatch.build.targets.sdist]
 include = [
   "openapi_generator_cli",
+]
+artifacts = [
   "openapi_generator_cli/openapi-generator.jar",
 ]
 
 [tool.hatch.build.targets.wheel]
 include = [
   "openapi_generator_cli",
+]
+artifacts = [
   "openapi_generator_cli/openapi-generator.jar",
 ]
 
