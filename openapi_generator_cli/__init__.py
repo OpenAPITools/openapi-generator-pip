@@ -28,7 +28,7 @@ def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
     """
     java_path: Path | str | None
     try:
-        from jdk4py import JAVA
+        from jdk4py import JAVA  # noqa: PLC0415
 
         java_path = JAVA
     except ImportError:
