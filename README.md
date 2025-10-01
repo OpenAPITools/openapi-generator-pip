@@ -38,7 +38,7 @@ pip install openapi-generator-cli
 pip install openapi-generator-cli==4.3.1
 ```
 
-You can also install with [`jdk4py`] instead of `java` binary. (`python>=3.10` is required)
+You can also install with [`jdk4py`] instead of `java` binary.
 
 ```sh
 pip install openapi-generator-cli[jdk4py]
