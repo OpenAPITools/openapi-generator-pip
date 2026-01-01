@@ -41,7 +41,7 @@ jobs:
         uv run task test:ci
     - name: Pytest coverage comment
       if: ${{ github.actor != 'dependabot[bot]' }}
-      uses: MishaKav/pytest-coverage-comment@v1.1.57
+      uses: MishaKav/pytest-coverage-comment@v1.2.0
       with:
         pytest-xml-coverage-path: ./coverage.xml
         junitxml-path: ./pytest.xml
