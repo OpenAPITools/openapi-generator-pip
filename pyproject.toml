@@ -37,10 +37,10 @@ scripts.openapi-generator-cli = "openapi_generator_cli:cli"
 
 [dependency-groups]
 dev = [
-  "mypy>=0.991,<1.15",
+  "mypy>=0.991,<1.20",
   "natsort>=8.4,<9",
   "pre-commit>=2.20,<5",
-  "pytest>=7.2.2,<9",
+  "pytest>=7.2.2,<10",
   "pytest-cov>=6",
   "taskipy>=1.10.3,<2",
 ]
