@@ -61,7 +61,7 @@ def cli() -> None:
     args = []
     if len(sys.argv) > 1:
         args = sys.argv[1:]
-    run(args)
+    sys.exit(run(args).returncode)
 
 
 if __name__ == "__main__":

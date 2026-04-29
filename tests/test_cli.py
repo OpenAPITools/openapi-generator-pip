@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import os
 import re
-from typing import TYPE_CHECKING
+import subprocess
+from unittest.mock import MagicMock, patch
 
-from openapi_generator_cli import run
+import pytest
 
-if TYPE_CHECKING:
-    import pytest
+from openapi_generator_cli import cli, run
+
+RETURN_CODE = 23
 
 
 def test_cli_version(capfd: pytest.CaptureFixture[str]) -> None:
@@ -45,3 +47,16 @@ def test_invalid_arg(capfd: pytest.CaptureFixture[str]) -> None:
         "Found unexpected parameters: [--invalid-arg-404]"
         in captured.err.split(os.linesep)[0]
     )
+
+
+@patch("openapi_generator_cli.run", autospec=True)
+@patch("sys.argv", ["openapi-generator-cli", "version"])
+def test_cli_exits_with_returncode(run_mock: MagicMock) -> None:
+    run_mock.return_value = subprocess.CompletedProcess(args=[], returncode=RETURN_CODE)
+
+    with pytest.raises(SystemExit) as exc_info:
+        cli()
+
+    assert exc_info.value.code == RETURN_CODE
+
+    run_mock.assert_called_once_with(["version"])
