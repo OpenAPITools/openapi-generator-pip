@@ -58,7 +58,10 @@ def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
 
 def cli(argv: list[str] | None = None) -> None:
     """Run the OpenAPI Generator CLI with the arguments provided on the command line."""
-    args = argv[1:] if argv is not None and len(argv) > 1 else []
+    argv = argv or sys.argv
+    args = []
+    if len(argv) > 1:
+        args = argv[1:]
     sys.exit(run(args).returncode)
 
 
