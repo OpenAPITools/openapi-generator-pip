@@ -56,12 +56,17 @@ def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
     return subprocess.run(arguments, check=False)  # noqa: S603
 
 
-def cli() -> None:
-    """Run the OpenAPI Generator CLI with the arguments provided on the command line."""
-    args = []
-    if len(sys.argv) > 1:
-        args = sys.argv[1:]
-    run(args)
+def cli(argv: list[str] | None = None) -> None:
+    """Run the OpenAPI Generator CLI with the arguments provided on the command line.
+
+    Args:
+        argv (list[str], optional):
+            The command-line arguments to pass to the OpenAPI Generator CLI.
+            If not provided, sys.argv is used.
+
+    """
+    args = (argv or sys.argv)[1:]
+    sys.exit(run(args).returncode)
 
 
 if __name__ == "__main__":

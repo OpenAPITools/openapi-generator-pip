@@ -2,12 +2,10 @@ from __future__ import annotations
 
 import os
 import re
-from typing import TYPE_CHECKING
 
-from openapi_generator_cli import run
+import pytest
 
-if TYPE_CHECKING:
-    import pytest
+from openapi_generator_cli import cli, run
 
 
 def test_cli_version(capfd: pytest.CaptureFixture[str]) -> None:
@@ -38,6 +36,19 @@ def test_no_args(capfd: pytest.CaptureFixture[str]) -> None:
 def test_invalid_arg(capfd: pytest.CaptureFixture[str]) -> None:
     result = run(args=["--invalid-arg-404"])
     assert result.returncode == 1
+
+    captured = capfd.readouterr()
+    assert not captured.out
+    assert (
+        "Found unexpected parameters: [--invalid-arg-404]"
+        in captured.err.split(os.linesep)[0]
+    )
+
+
+def test_cli_invalid_arg(capfd: pytest.CaptureFixture[str]) -> None:
+    with pytest.raises(SystemExit) as exc_info:
+        cli(["openapi-generator-cli", "--invalid-arg-404"])
+    assert exc_info.value.code == 1
 
     captured = capfd.readouterr()
     assert not captured.out
