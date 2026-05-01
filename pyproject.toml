@@ -29,7 +29,7 @@ classifiers = [
 ]
 dependencies = [  ]
 
-optional-dependencies.jdk4py = [ "jdk4py>=21.0.4.1,<22; python_version>='3.10'" ]
+optional-dependencies.jdk4py = [ "jdk4py>=21.0.4.1,<26; python_version>='3.10'" ]
 urls.Documentation = "https://github.com/OpenAPITools/openapi-generator#3---usage"
 urls.Homepage = "https://openapi-generator.tech"
 urls.Repository = "https://github.com/OpenAPITools/openapi-generator"
