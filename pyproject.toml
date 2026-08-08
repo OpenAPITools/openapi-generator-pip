@@ -60,6 +60,7 @@ build.targets.sdist.artifacts = [
 
 [tool.uv]
 default-groups = [ "dev" ]
+preview = true
 
 [tool.ruff]
 line-length = 120
@@ -69,6 +70,7 @@ lint.select = [
   "ALL",
 ]
 lint.ignore = [
+  "COM812", # Trailing comma missing (conflicts with the formatter)
   "CPY001", # Missing copyright notice at top of file
   "D211",   # No blank lines allowed before class docstring
   "D213",   # Multi-line docstring summary should start at the second line
