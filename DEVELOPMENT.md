@@ -15,7 +15,7 @@ uv sync
 ## Lint
 
 ```bash
-mise run lint
+mise run pre-commit
 ```
 
 ## Fetch latest jar file

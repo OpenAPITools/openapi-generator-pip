@@ -80,7 +80,7 @@ def get_available_versions() -> set[str]:
 
 def get_published_versions() -> set[str]:
     pypi_url = "https://pypi.org/pypi/openapi-generator-cli/json"
-    response = urlopen(pypi_url)  #  noqa: S310
+    response = urlopen(pypi_url)
 
     if response.status != 200:  # noqa: PLR2004
         msg = f"{response.status}: {pypi_url}"

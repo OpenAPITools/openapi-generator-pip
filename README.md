@@ -8,6 +8,14 @@
   <https://badge.fury.io/py/openapi-generator-cli.svg>
 )](
   <https://badge.fury.io/py/openapi-generator-cli>
+) [![Lint](
+  <https://github.com/OpenAPITools/openapi-generator-pip/actions/workflows/lint.yaml/badge.svg>
+)](
+  <https://github.com/OpenAPITools/openapi-generator-pip/actions/workflows/lint.yaml>
+) [![Test](
+  <https://github.com/OpenAPITools/openapi-generator-pip/actions/workflows/test.yaml/badge.svg>
+)](
+  <https://github.com/OpenAPITools/openapi-generator-pip/actions/workflows/test.yaml>
 ) [![Code style: black](
   <https://img.shields.io/badge/code%20style-black-000000.svg>
 )](

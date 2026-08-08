@@ -4,9 +4,33 @@ java = "latest"
 pinact = "latest"
 uv = "latest"
 
-[tasks.lint]
-description = "Run pre-commit on all files"
-run = "uv run pre-commit run -a"
+[tasks.ruff]
+description = "Run Ruff"
+run = [
+  "uvx ruff check --fix .",
+  "uv format",
+]
+
+[tasks.pymarkdown]
+description = "Run PyMarkdownLnt"
+run = "uv run pymarkdown fix --list-files ."
+
+[tasks.pyproject-fmt]
+description = "Run pyproject-fmt"
+run = "uv run pyproject-fmt ./pyproject.toml"
+
+[tasks.ty]
+description = "Run Ty"
+run = "uvx ty check --respect-ignore-files"
+depends = ["uv-sync"]
+
+[tasks.uv-sync]
+description = "Sync UV dependencies"
+run = "uv sync --locked"
+
+[tasks.pre-commit]
+description = "Run checks on pre-commit"
+depends = ["ruff", "ty", "pymarkdown", "pyproject-fmt"]
 
 [tasks.test]
 description = "Run tests"

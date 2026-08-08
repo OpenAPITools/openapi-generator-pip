@@ -28,7 +28,8 @@ def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
     """
     java_path: Path | str | None
     try:
-        from jdk4py import JAVA  # noqa: PLC0415
+        # jdk4py is an optional dependency and is not installed in the lint environment
+        from jdk4py import JAVA  # noqa: PLC0415 # ty: ignore[unresolved-import]
 
         java_path = JAVA
     except ImportError:
@@ -45,9 +46,7 @@ def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
 
     arguments.append("-jar")
 
-    jar_path = (
-        importlib.resources.files("openapi_generator_cli") / "openapi-generator.jar"
-    )
+    jar_path = importlib.resources.files("openapi_generator_cli") / "openapi-generator.jar"
     arguments.append(str(jar_path))
 
     if args and isinstance(args, list):

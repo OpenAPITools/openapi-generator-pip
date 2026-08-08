@@ -23,12 +23,12 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
   "Typing :: Typed",
 ]
-dependencies = [  ]
-
+dependencies = []
 optional-dependencies.jdk4py = [ "jdk4py>=21.0.4.1,<26; python_version>='3.10'" ]
 urls.Documentation = "https://github.com/OpenAPITools/openapi-generator#3---usage"
 urls.Homepage = "https://openapi-generator.tech"
@@ -37,28 +37,29 @@ scripts.openapi-generator-cli = "openapi_generator_cli:cli"
 
 [dependency-groups]
 dev = [
-  "mypy>=0.991,<1.21",
   "natsort>=8.4,<9",
-  "pre-commit>=2.20,<5",
+  "pymarkdownlnt>=0.9.33",
+  "pyproject-fmt>=2.6,<3",
   "pytest>=7.2.2,<10",
   "pytest-cov>=6",
 ]
 
-[tool.hatch.build.targets.sdist]
-include = [
+[tool.hatch]
+build.targets.wheel.include = [
   "openapi_generator_cli",
 ]
-artifacts = [
+build.targets.wheel.artifacts = [
+  "openapi_generator_cli/openapi-generator.jar",
+]
+build.targets.sdist.include = [
+  "openapi_generator_cli",
+]
+build.targets.sdist.artifacts = [
   "openapi_generator_cli/openapi-generator.jar",
 ]
 
-[tool.hatch.build.targets.wheel]
-include = [
-  "openapi_generator_cli",
-]
-artifacts = [
-  "openapi_generator_cli/openapi-generator.jar",
-]
+[tool.uv]
+default-groups = [ "dev" ]
 
 [tool.ruff]
 line-length = 120
@@ -68,8 +69,9 @@ lint.select = [
   "ALL",
 ]
 lint.ignore = [
-  "D211", # No blank lines allowed before class docstring
-  "D213", # Multi-line docstring summary should start at the second line
+  "CPY001", # Missing copyright notice at top of file
+  "D211",   # No blank lines allowed before class docstring
+  "D213",   # Multi-line docstring summary should start at the second line
 ]
 lint.per-file-ignores."publish.py" = [
   "D",
@@ -82,12 +84,5 @@ lint.per-file-ignores."tests/*" = [
 ]
 lint.pydocstyle.convention = "google"
 
-[tool.mypy]
-pretty = true
-python_version = "3.9"
-show_error_codes = true
-strict = true
-
-[tool.uv]
-default-groups = [ "dev" ]
-
+[tool.pymarkdown]
+plugins.md013.enabled = false  # Line length
