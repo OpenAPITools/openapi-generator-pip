@@ -20,28 +20,20 @@ jobs:
         python-version:
         - '3.10'
         - '3.13'
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
     steps:
-    - uses: actions/checkout@v6
-    - uses: actions/setup-java@v5
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
       with:
-        distribution: temurin
-        java-version: '21'
-    - uses: astral-sh/setup-uv@v7
-      with:
-        enable-cache: true
-        cache-dependency-glob: uv.lock
-        python-version: ${{ matrix.python-version }}
+        install_args: java uv
     - name: Setup
-      shell: bash
-      run: |
-        export DOWNLOAD_LATEST_ONLY=1
-        uv run task publish
+      run: mise run download-latest-jar
     - name: Test
-      run: |
-        uv run task test:ci
+      run: mise run test:ci
     - name: Pytest coverage comment
       if: ${{ github.actor != 'dependabot[bot]' }}
-      uses: MishaKav/pytest-coverage-comment@v1.7.2
+      uses: MishaKav/pytest-coverage-comment@09c28b6767e12a048e0b23e821ed03133ee48a1a # v1.11.0
       with:
         pytest-xml-coverage-path: ./coverage.xml
         junitxml-path: ./pytest.xml
