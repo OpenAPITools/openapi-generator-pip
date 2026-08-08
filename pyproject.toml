@@ -42,7 +42,6 @@ dev = [
   "pre-commit>=2.20,<5",
   "pytest>=7.2.2,<10",
   "pytest-cov>=6",
-  "taskipy>=1.10.3,<2",
 ]
 
 [tool.hatch.build.targets.sdist]
@@ -92,11 +91,3 @@ strict = true
 [tool.uv]
 default-groups = [ "dev" ]
 
-[tool.taskipy.tasks]
-download-latest-jar = "DOWNLOAD_LATEST_ONLY=1 task publish"
-test = "pytest"
-"test:ci" = "pytest --junitxml=pytest.xml --cov=openapi_generator_cli --cov-report=xml:coverage.xml"
-test-unpublished-versions = "DRYRUN=1 task publish"
-lint = "pre-commit run -a"
-publish = "python publish.py"
-profile = "python -m cProfile"

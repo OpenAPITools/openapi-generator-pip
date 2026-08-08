@@ -2,39 +2,42 @@
 
 ## Requirement
 
-- `python>=3.9`
-- `java`
+- [mise](https://mise.jdx.dev/)
 
 ## Setup
 
-Open [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers) in the cloned project.
+```bash
+mise install
+mise generate git-pre-commit -w
+uv sync
+```
 
 ## Lint
 
 ```bash
-task lint
+mise run lint
 ```
 
 ## Fetch latest jar file
 
 ```bash
-task download-latest-jar
+mise run download-latest-jar
 ```
 
 ## Run tests for all unpublished versions without publishing
 
 ```bash
-task test-unpublished-versions
+mise run test-unpublished-versions
 ```
 
 ## Test
 
 ```bash
-task test
+mise run test
 ```
 
 ## Publish all unpublished versions to PyPI (for CI)
 
 ```bash
-task publish
+mise run publish
 ```

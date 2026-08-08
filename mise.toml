@@ -1,0 +1,35 @@
+[tools]
+claude = "latest"
+java = "latest"
+pinact = "latest"
+uv = "latest"
+
+[tasks.lint]
+description = "Run pre-commit on all files"
+run = "uv run pre-commit run -a"
+
+[tasks.test]
+description = "Run tests"
+run = "uv run pytest"
+
+[tasks."test:ci"]
+description = "Run tests and write JUnit/coverage reports (for CI)"
+run = "uv run pytest --junitxml=pytest.xml --cov=openapi_generator_cli --cov-report=xml:coverage.xml"
+
+[tasks.publish]
+description = "Publish all unpublished versions to PyPI (for CI)"
+run = "uv run python publish.py"
+
+[tasks.download-latest-jar]
+description = "Fetch latest jar file"
+env.DOWNLOAD_LATEST_ONLY = "1"
+run = "uv run python publish.py"
+
+[tasks.test-unpublished-versions]
+description = "Run tests for all unpublished versions without publishing"
+env.DRYRUN = "1"
+run = "uv run python publish.py"
+
+[tasks.profile]
+description = "Profile a script with cProfile"
+run = "uv run python -m cProfile"
