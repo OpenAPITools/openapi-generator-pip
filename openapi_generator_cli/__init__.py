@@ -29,7 +29,7 @@ def run(args: list[str] | None = None) -> subprocess.CompletedProcess[bytes]:
     java_path: Path | str | None
     try:
         # jdk4py is an optional dependency and is not installed in the lint environment
-        from jdk4py import JAVA  # noqa: PLC0415 # ty: ignore[unresolved-import]
+        from jdk4py import JAVA  # noqa: PLC0415 # ty: ignore[import-not-found]
 
         java_path = JAVA
     except ImportError:
